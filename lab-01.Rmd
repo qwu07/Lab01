@@ -48,7 +48,7 @@ _Create a frequency table by `admission` and `setting`._
 ```{r Ex_b}
 # Delete the comment '#' symbol at the start of the next line and complete the code.
 
-#visitors %>% count(admission, setting)
+visitors %>% count(admission, setting)
 ```
 
 
@@ -59,6 +59,7 @@ _What are the variable data types?_
 ```{r Q2_part1}
 class(visitors$n_2022)
 ```
+numeric
 
 ```{r Q2_part2}
 visitors %>% summarise_all(class)
@@ -74,13 +75,14 @@ _Which attraction had the most number of visitors in 2022?_
 visitors %>% arrange(desc(n_2022))
 ```
 
+
 ### Exercise c.
 
 _What are the top 10 most visited attractions in 2021?_
 ```{r Ex_c}
-#visitors %>% 
-#  arrange(____(____)) %>%
-#  head(n = ____)
+visitors %>% 
+  arrange(desc(n_2021)) %>%
+  head(n = 10)
 ```
 
 ## Question 4
@@ -90,24 +92,25 @@ _What is the admission charge for the `"National Museum of Scotland"`?_
 ```{r Q4}
 visitors %>% filter(attraction == "National Museum of Scotland")
 ```
-
+Free
 
 ### Exercise d.
 
 _Which attraction had exactly 565,772 visitors in 2022?_
 
 ```{r Ex_d}
-#visitors %>% filter(___ == ____)
+visitors %>% filter(n_2022 == 565772)
 ```
+Knowsley Safari and Knowsley Hall
 
 ### Exercise e.
 
 _How many attraction had more than 1 million visitors in 2022?_
 
 ```{r Ex_e}
-#visitors %>% 
-#  filter(____) %>%
-#  count()
+visitors %>%
+ filter(n_2022>1000000) %>%
+ count()
 ```
 
 ## Question 5
@@ -130,11 +133,11 @@ visitors %>%
 _How many attractions had between 50,000 and 100,000 visitors in 2022?_
 
 ```{r Ex_f}
-#visitors %>% 
-#  ____(
-#    ______,
-#    ______ ) %>%
-#  count()
+visitors %>%
+ filter(
+  n_2022<=100000,
+   n_2022>=50000) %>%
+ count()
 ```
 
 ### Exercise g.
@@ -142,9 +145,10 @@ _How many attractions had between 50,000 and 100,000 visitors in 2022?_
 _How many regions have more than 50 tourist attraction in the data set? (Hint: You will need to tabulate the data before filtering.)_
 
 ```{r Ex_g}
-#visitors %>% 
-#  _____(region) %>%
-#  filter(______)
+visitors %>%
+  count(region)%>%
+  filter(n>50)
+
 ```
 
 
@@ -169,11 +173,11 @@ visitors %>%
 _Perform the same calculation for the 2021 admissions data._
 
 ```{r Ex_h}
-#visitors %>% 
-#  ______(
-#    __________,
-#    __________
-#  )
+visitors %>%
+ summarise(
+   mean_2021 = mean(n_2021, na.rm = TRUE),
+    med_2021 = median(n_2021, na.rm = TRUE)
+ )
 ```
 
 All values in the output are `NA`!
@@ -184,7 +188,7 @@ _What does `NA` stand for and why are you getting this as your answer to the pre
 
 **Write your answer here**
 
-
+NA stands for Data not available, and since there are unknown data in the column, a calculation of mean would return NA as not all values are known 
 
 
 ### Exercise j.
@@ -214,7 +218,7 @@ visitors %>%
 _Observe in question 6 that the mean statistics across all settings are much larger than the corresponding median statistics. Discuss in your group what this suggests about the data._
 
 **Write your answer here**
-
+mean affected by outliers median does not
 
 
 
